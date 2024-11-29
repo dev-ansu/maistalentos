@@ -8,7 +8,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { RegistarUsuarioSchema, RegistrarUsuarioProps } from "../../schemas/RegistarUsuarioSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
+interface DataRegisterUserProps extends RegistrarUsuarioProps{
+    createdAt: Date;
+}
 
 const Register = ()=>{
 
@@ -17,15 +21,20 @@ const Register = ()=>{
         criteriaMode:"all",
         resolver: zodResolver(RegistarUsuarioSchema),
     });
-    
+    const [loading, setLoading] = useState<boolean>(false);
 
     const cadastrarUsuario = async (data:RegistrarUsuarioProps)=>{
+        setLoading(true);
+        const actualDate = new Date;
+        const newData = {...data, createdAt: actualDate} as DataRegisterUserProps;
         try{
-            await addDoc(collection(db, 'candidatos'), data);
+            await addDoc(collection(db, 'candidatos'), newData);
             toast.success("Registro salvo com sucesso!");
             reset();
+            setLoading(false);
         }catch(err: any){
             toast.error("Não foi possível salvar os dados. Tente novamente mais tarde.")
+            setLoading(false);
         }
     }
 
@@ -105,13 +114,11 @@ const Register = ()=>{
 
                 <div className="flex flex-col w-full gap-4">
                     <p className="border-b text-xl border-b-orange-500">Informações profissionais</p>
-                    <p>Escolha pelo menos três opções.</p>
                     <div className="flex flex-wrap gap-4 w-full">
                         {objetivos.objetivos.map(objetivo => (
                             <label key={objetivo}>
                             {objetivo}
                             <Input
-                                
                                 register={register("objetivos")}
                                 defaultValue={objetivo}
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
@@ -123,7 +130,27 @@ const Register = ()=>{
                     {errors?.objetivos && <span>{errors.objetivos?.message}</span>}
                 </div>
 
-                <button className="border-none outline-none bg-orange-500 rounded-sm py-2 px-1 text-white mt-4">Cadastrar</button>
+                <div className="flex flex-col w-2/4 gap-4">
+                    <label className="text-xs flex flex-row-reverse justify-center items-center">
+                        declaro que estou ciente e de acordo com a minha adesão ao PROGRAMA MAIS TALENTOS, que não
+                        significa qualquer promessa de emprego ou estágio por parte do programa. Declaro também que minha adesão é voluntária, gratuita, e não está condicionada a
+                        qualquer relação comercial que por ventura eu venha a firmar com o PROGRAMA MAIS TALENTOS e autorizo o uso de minha imagem para eventual utilização em materiais e vídeos
+                        publicitários ou institucionais com objetivo de divulgar o PROGRAMA MAIS TALENTOS.
+
+                    <Input
+                        register={register("aceite")}
+                        defaultChecked={true}
+                        className="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
+                        type="checkbox"
+                    />
+                    </label>
+                    {errors?.aceite && <span>{errors.aceite?.message}</span>}
+                </div>
+
+                <button  disabled={loading && true} className="border-none outline-none bg-orange-500 rounded-sm py-2 px-1 text-white mt-4">
+                    {!loading && 'Cadastrar'}
+                    {loading && 'Aguarde um pouco...'}
+                </button>
             </form>
         </div>
     )
