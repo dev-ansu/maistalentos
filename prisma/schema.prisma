@@ -1,0 +1,225 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum JobType{
+  presencial
+  hibrido
+  remoto
+}
+
+enum JobStatus{
+  open
+  paused
+  closed
+}
+
+enum ApplicationStatus{
+  pending
+  accepted
+  rejected
+}
+
+enum DegreeLevel{
+  fundamental
+  medio
+  tecnico
+  superior_completo
+  superior_incompleto
+  pos_graduacao
+  mestrado
+  doutorado
+}
+
+enum LanguageProficiency{
+  basico
+  intermediario
+  avancado
+  fluente
+  nativo
+}
+
+model User{
+  id String @id @default(uuid())
+  name String
+  email String
+  password String
+  isActive Boolean @default(true)
+  isSuperAdmin Boolean @default(false)   // ✅ Superadmin
+  roleId String?
+  role Role? @relation(fields: [roleId], references: [id])
+  candidate CandidateProfile?
+  company CompanyProfile?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("users")
+}
+
+model Role{
+  id String @id @default(ulid())
+  name String @unique
+  description String?
+  permissions RolePermission[]
+  users User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("roles")
+}
+
+model Permission{
+  id String @id @default(uuid())
+  name String @unique
+  description String?
+  roles RolePermission[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("permissions")
+}
+
+model RolePermission{
+  id String @id @default(uuid())
+  roleId String
+  permissionId String
+  role Role @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+  @@map("role_permissions")
+}
+
+model CandidateProfile{
+  id String @id @default(uuid())
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+  birthDate DateTime?
+  summary String?
+  resumeUrl String?
+  education Education[]
+  courses Course[]
+  languages Language[]
+  experiences Experience[]
+  applications Application[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("candiddate_profile")
+}
+
+model CompanyProfile{
+  id String @id @default(uuid())
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+  name String
+  cnpj String @unique
+  description String?
+  website String?
+  jobs Job[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("company_profile")
+}
+
+
+model Job{
+  id String @id @default(uuid())
+  companyId String
+  company CompanyProfile @relation(fields: [companyId], references: [id])
+  title String
+  description String
+  requirements String?
+  salary Float?
+  location String?
+  type JobType
+  status JobStatus @default(open)
+  applications Application[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([companyId])
+  @@index([status])
+  @@map("jobs")
+}
+
+model Application{
+  id String @id @default(ulid())
+  candidateId String
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  jobId String
+  job Job @relation(fields: [jobId], references: [id])
+  status ApplicationStatus @default(pending)
+
+  @@index([candidateId, jobId])
+
+  @@map("applications")
+}
+
+model Education{
+  id String @id @default(uuid())
+  candidateId String
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  institution String
+  degree DegreeLevel
+  fieldOfStudy String?
+  startDate DateTime?
+  endDate DateTime?
+  currentlyStudying Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("educations")
+}
+
+model Course{
+  id String @id @default(uuid())
+  candidateId String
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  title String
+  institution String?
+  hours Int?
+  certificateUrl String?
+  completionDate DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("courses")
+}
+
+model Language{
+  id String @id @default(uuid())
+  candidateId String
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  name String
+  proficiency LanguageProficiency
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("languages")
+}
+
+model Experience{
+  id String @id @default(uuid())
+  candidateId String
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  company String
+  position String
+  description String?
+  startDate DateTime
+  endDate DateTime?
+  currentlyWorking Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("experiences")
+}
