@@ -24,8 +24,10 @@ export function isAuthenticated(
 
         return next();
     }catch(err){
+        
+        if (err instanceof AppError) throw err;
+
         throw new AppError('Não autorizado', 401)
     }
 
-    console.log(authToken);    
 }

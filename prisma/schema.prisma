@@ -106,6 +106,12 @@ model CandidateProfile{
   birthDate DateTime?
   summary String?
   resumeUrl String?
+  phone String
+  whatsapp String  
+  stateId String
+  state State @relation(fields: [stateId], references: [id])
+  cityId String
+  city City @relation(fields: [cityId], references: [id])
   education Education[]
   courses Course[]
   languages Language[]
@@ -126,6 +132,10 @@ model CompanyProfile{
   description String?
   website String?
   jobs Job[]
+  stateId String
+  state State @relation(fields: [stateId], references: [id])
+  cityId String
+  city City @relation(fields: [cityId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -141,10 +151,18 @@ model Job{
   description String
   requirements String?
   salary Float?
+  
   location String?
   type JobType
   status JobStatus @default(open)
   applications Application[]
+
+  stateId String
+  state State @relation(fields: [stateId], references: [id])
+
+  cityId String
+  city City @relation(fields: [cityId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -222,4 +240,32 @@ model Experience{
   updatedAt DateTime @updatedAt
 
   @@map("experiences")
+}
+
+model State{
+  id String @id @default(uuid())
+  name String @unique
+  acronym String @unique @db.VarChar(2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cities City[]
+
+  @@map("states")
+  jobs Job[]
+  candidateProfiles CandidateProfile[]
+  companyProfiles CompanyProfile[]
+}
+
+model City{
+  id String @id @default(uuid())
+  name String @db.VarChar(250)
+  stateId String
+  state State @relation(fields: [stateId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("cities")
+  jobs Job[]
+  candidateProfiles CandidateProfile[]
+  companyProfiles CompanyProfile[]
 }
