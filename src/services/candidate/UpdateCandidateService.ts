@@ -4,7 +4,6 @@ interface CandidateRequest{
   userId: string;
   birthDate?: Date;
   summary?: string;
-  resumeUrl?: string;
   city: string;
   state: string;
   phone: string;
@@ -14,6 +13,8 @@ interface CandidateRequest{
 export default class UpdateCandidateService{
     async execute(candidate: CandidateRequest){
         
+
+
         return { ok: true }
     }
 }

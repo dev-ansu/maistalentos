@@ -20,12 +20,17 @@ import UpdateCityController from "./controllers/city/UpdateCityController";
 
 const router = Router();
 
-router.post("/users", createUserValidation, validate, new CreateUserController().handle);
-router.post("/session", authUserValidation, validate, new AuthUserController().handle)
+// INÍCIO DAS ROTAS PÚBLICAS \\
+    router.post("/users", createUserValidation, validate, new CreateUserController().handle);
+    router.post("/session", authUserValidation, validate, new AuthUserController().handle)
+// FIM DAS ROTAS PÚBLICAS \\
 
+// INÍCIO DAS ROTAS DE CANDIDATOS \\
+    
+    router.get("/me", isAuthenticated, new DetailUserController().handle);
+    router.post("/candidate", isAuthenticated, updateCandidateValidation, validate, new UpdateCandidateController().handle);
 
-router.get("/me", isAuthenticated, new DetailUserController().handle);
-router.post("/candidate", isAuthenticated, updateCandidateValidation, validate, new UpdateCandidateController().handle);
+// FIM DAS ROTAS DE CANDIDATOS \\
 
 
 // INÍCIO DAS ROTAS DE ESTADO \\
@@ -49,8 +54,5 @@ router.post("/candidate", isAuthenticated, updateCandidateValidation, validate, 
 router.get("/teste", async (req: Request, res: Response)=>{
     return res.json( { ok: true });
 });
-
-
-
 
 export { router };
