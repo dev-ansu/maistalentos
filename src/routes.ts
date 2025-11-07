@@ -11,11 +11,12 @@ import CreateStateController from "./controllers/state/CreateStateController";
 import DeleteStateController from "./controllers/state/DeleteStateController";
 import CreateCityController from "./controllers/city/CreateCityController";
 import { isSuperAdmin } from "./middlewares/isSuperAdmin";
-import { createCityValidation, listCityByStateIdValidation } from "./validations/city/cityValidation";
+import { createCityValidation, listCityByStateIdValidation, updateCityValidation } from "./validations/city/cityValidation";
 import { createStateValidation, deleteStateValidation, listStateValidation } from "./validations/state/stateValidation";
 import UpdateStateController from "./controllers/state/UpdateStateController";
 import ListStateController from "./controllers/state/ListStateController";
 import ListCitiesByStateIdController from "./controllers/city/ListCitiesByStateIdController";
+import UpdateCityController from "./controllers/city/UpdateCityController";
 
 const router = Router();
 
@@ -37,9 +38,12 @@ router.post("/candidate", isAuthenticated, updateCandidateValidation, validate, 
 // FIM DAS ROTAS DE ESTADO \\
 
 // INÍCIO DAS ROTAS DE CIDADES \\
+
     router.get("/city/state/:stateId", isAuthenticated, listCityByStateIdValidation, validate, new ListCitiesByStateIdController().handle)
     router.get("/city{/:search}", isAuthenticated, listCityByStateIdValidation, validate, new ListCitiesByStateIdController().handle)
     router.post("/city", isAuthenticated, isSuperAdmin, createCityValidation, validate, new CreateCityController().handle);
+    router.put("/city/:id", isAuthenticated, isSuperAdmin, updateCityValidation, validate, new UpdateCityController().handle);
+
 // FIM DAS ROTAS DE CIDADES \\
 
 router.get("/teste", async (req: Request, res: Response)=>{
