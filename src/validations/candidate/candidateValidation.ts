@@ -43,4 +43,23 @@ export const createCandidateEducationValidation = [
         .default(false)
         .toBoolean()
         .isBoolean().withMessage("Escolha uma opção válida."),
-]
+];
+
+export const createCandidateCourseValidation = [
+    body('title').notEmpty().withMessage('O nome do curso é obrigatório.'),
+    body('institution').notEmpty().withMessage("A instituição é obrigatória."),
+    body('hours').toInt().isInt().notEmpty().withMessage("A carga horária deve ser um inteiro."),
+    body("completionDate").notEmpty().withMessage("Data de conclusão é obrigatória.").isISO8601().withMessage("Digite uma data válida no formato YYYY-MM-DD.")
+];
+
+export const createCandidateExperienceValidation = [
+    body("company").notEmpty().withMessage("O nome da empresa é obrigatório."),
+    body("position").notEmpty().withMessage("O cargo ocupado é obrigatório."),
+    body("description").trim().optional(),
+    body("startDate").notEmpty().withMessage('A data de início é obrigatória').isISO8601().withMessage("Digite uma data válida no formato YYYY-MM-DD."),
+    body("endDate").optional().isISO8601().withMessage("Digite uma data válida no formato YYYY-MM-DD."),
+    body("currentlyWorking")
+    .default(false)
+    .toBoolean()
+    .isBoolean().withMessage("Escolha uma opção válida."),
+];

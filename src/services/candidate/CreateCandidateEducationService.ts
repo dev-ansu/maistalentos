@@ -23,16 +23,19 @@ export default class CreateCandidateEducationService{
         if (!candidate) {
             throw new AppError("Perfil de candidato não encontrado.");
         }
+        const parsedStartDate =
+            typeof startDate === "string" ? new Date(startDate) : startDate;
+        const parsedEndDate = endDate && typeof endDate === "string" ? new Date(endDate) : endDate;
 
         const education = await prisma.education.create({
-                data: {
+            data: {
                 candidate: { connect: { id: candidate.id } },
                 degree,
                 fieldOfStudy,
                 institution,
-                startDate,
-                endDate: currentlyStudying ? null : endDate,
-                currentlyStudying
+                startDate: parsedStartDate,
+                endDate: currentlyStudying ? null : parsedEndDate,
+                currentlyStudying: endDate ? false:true
             },
         });
 

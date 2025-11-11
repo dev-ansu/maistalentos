@@ -127,6 +127,7 @@ model CandidateProfile{
   updatedAt DateTime @updatedAt
 
   @@map("candiddate_profile")
+  candidateInterests CandidateInterest[]
 }
 
 model CompanyProfile{
@@ -274,4 +275,22 @@ model City{
   jobs Job[]
   candidateProfiles CandidateProfile[]
   companyProfiles CompanyProfile[]
+}
+
+model InterestArea {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  candidates CandidateInterest[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CandidateInterest {
+  id           String          @id @default(uuid())
+  candidateId  String
+  candidate    CandidateProfile @relation(fields: [candidateId], references: [id])
+  interestId   String
+  interest     InterestArea     @relation(fields: [interestId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
