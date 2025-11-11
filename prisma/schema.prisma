@@ -102,7 +102,7 @@ model RolePermission{
 model CandidateProfile{
   id String @id @default(uuid())
   userId String @unique
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   birthDate DateTime?
   summary String?
   resumeUrl String?
@@ -126,7 +126,7 @@ model CandidateProfile{
 model CompanyProfile{
   id String @id @default(uuid())
   userId String @unique
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   name String
   cnpj String @unique
   description String?
@@ -146,7 +146,7 @@ model CompanyProfile{
 model Job{
   id String @id @default(uuid())
   companyId String
-  company CompanyProfile @relation(fields: [companyId], references: [id])
+  company CompanyProfile @relation(fields: [companyId], references: [id], onDelete: Cascade)
   title String
   description String
   requirements String?
@@ -174,7 +174,7 @@ model Job{
 model Application{
   id String @id @default(ulid())
   candidateId String
-  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   jobId String
   job Job @relation(fields: [jobId], references: [id])
   status ApplicationStatus @default(pending)
@@ -187,7 +187,7 @@ model Application{
 model Education{
   id String @id @default(uuid())
   candidateId String
-  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   institution String
   degree DegreeLevel
   fieldOfStudy String?
@@ -203,7 +203,7 @@ model Education{
 model Course{
   id String @id @default(uuid())
   candidateId String
-  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   title String
   institution String?
   hours Int?
@@ -218,7 +218,7 @@ model Course{
 model Language{
   id String @id @default(uuid())
   candidateId String
-  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   name String
   proficiency LanguageProficiency
   createdAt DateTime @default(now())
@@ -229,7 +229,7 @@ model Language{
 model Experience{
   id String @id @default(uuid())
   candidateId String
-  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   company String
   position String
   description String?
