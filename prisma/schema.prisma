@@ -51,11 +51,17 @@ enum LanguageProficiency{
   nativo
 }
 
+enum UserType {
+  candidate
+  company
+}
+
 model User{
   id String @id @default(uuid())
   name String
   email String
   password String
+  userType UserType @default(candidate) // ✅ tipo padrão
   isActive Boolean @default(true)
   isSuperAdmin Boolean @default(false)   // ✅ Superadmin
   roleId String?
