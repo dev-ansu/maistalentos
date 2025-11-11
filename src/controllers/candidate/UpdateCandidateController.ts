@@ -5,13 +5,14 @@ import UpdateCandidateService from "../../services/candidate/UpdateCandidateServ
 export default class UpdateCandidateController{
     
     async handle(req: Request, res: Response){
+        
+        const { birthdate, summary, city, state, phone, whatsapp} = req.body;
 
-        const { birthDate, summary, city, state, phone, whatsapp} = req.body;
         const userId = req.user_id;
 
         const candidateService = new UpdateCandidateService();
 
-        const candidate = candidateService.execute({city, phone, state,userId,whatsapp,birthDate,summary})
+        const candidate = await candidateService.execute({city, phone, state,userId,whatsapp,birthdate,summary})
 
         return ApiResponse.success(res, 'Dados atualizados com sucesso.', candidate);        
     }

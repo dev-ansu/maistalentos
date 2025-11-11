@@ -17,6 +17,8 @@ import UpdateStateController from "./controllers/state/UpdateStateController";
 import ListStateController from "./controllers/state/ListStateController";
 import ListCitiesByStateIdController from "./controllers/city/ListCitiesByStateIdController";
 import UpdateCityController from "./controllers/city/UpdateCityController";
+import CreateCandidateEducationController from "./controllers/candidate/CreateCandidateEducationController";
+import CreateCandidateController from "./controllers/candidate/CreateCandidateController";
 
 const router = Router();
 
@@ -28,7 +30,9 @@ const router = Router();
 // INÍCIO DAS ROTAS DE CANDIDATOS \\
     
     router.get("/me", isAuthenticated, new DetailUserController().handle);
-    router.post("/candidate", isAuthenticated, updateCandidateValidation, validate, new UpdateCandidateController().handle);
+    router.post("/candidate", isAuthenticated, new CreateCandidateController().handle);
+    router.put("/candidate/:candidateId", isAuthenticated, updateCandidateValidation, validate, new UpdateCandidateController().handle);
+    router.post("/candidate/education", isAuthenticated, updateCandidateValidation, validate, new CreateCandidateEducationController().handle);
 
 // FIM DAS ROTAS DE CANDIDATOS \\
 

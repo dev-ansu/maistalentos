@@ -11,7 +11,6 @@ app.use(router);
 
 app.use(errorHandler); // sempre no final!
 
-
 app.listen(3333, ()=>{
     console.log('SERVIDOR RODANDO')
 })

@@ -106,12 +106,12 @@ model CandidateProfile{
   birthDate DateTime?
   summary String?
   resumeUrl String?
-  phone String
-  whatsapp String  
-  stateId String
-  state State @relation(fields: [stateId], references: [id])
-  cityId String
-  city City @relation(fields: [cityId], references: [id])
+  phone String?
+  whatsapp String?  
+  stateId String?
+  state State? @relation(fields: [stateId], references: [id])
+  cityId String?
+  city City? @relation(fields: [cityId], references: [id])
   education Education[]
   courses Course[]
   languages Language[]
