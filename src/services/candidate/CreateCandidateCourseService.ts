@@ -20,6 +20,7 @@ export default class CreateCandidateCourseService{
         if (!candidate) {
             throw new AppError("Perfil de candidato não encontrado.");
         }
+        
         const parsedCompletionDate =
             typeof completionDate === "string" ? new Date(completionDate) : completionDate;
 
