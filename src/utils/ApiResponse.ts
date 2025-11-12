@@ -1,7 +1,7 @@
 import { Response } from "express";
 
 export class ApiResponse {
-  static success(res, message = "Sucesso", data = null, status = 200) {
+  static success(res: Response, message = "Sucesso", data = null, status = 200) {
     return res.status(status).json({
       success: true,
       message,
@@ -9,7 +9,7 @@ export class ApiResponse {
     });
   }
 
-  static error(res, message = "Erro", status = 400, errors = null) {
+  static error(res: Response, message = "Erro", status = 400, errors = null) {
     return res.status(status).json({
       success: false,
       message,

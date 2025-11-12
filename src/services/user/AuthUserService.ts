@@ -20,7 +20,7 @@ export default class AuthUserService{
             }
         });
 
-        if(!user) throw new AppError('Usuário não encontrado.', 404);
+        if(!user) throw new AppError('Usuário não encontrado.', 401);
         
         const passwordMatch = await compare(password, user?.password)
         

@@ -1,7 +1,7 @@
 import { body } from "express-validator"
 
 export const createUserValidation = [
-    body('name').trim().escape().notEmpty().withMessage('O nome é obrigatório.'),
+    body('name').trim().escape().notEmpty().withMessage('O nome é obrigatório.').isLength({min: 2}).withMessage("O nome deve ter no mínimo dois caracteres."),
     body('email').isEmail().normalizeEmail().withMessage("O e-mail é obrigatório."),
     body('password').trim().notEmpty().withMessage('A senha é obrigatória.')
     .isLength({ min: 6}).withMessage('Míninmo 6 caracteres.')
