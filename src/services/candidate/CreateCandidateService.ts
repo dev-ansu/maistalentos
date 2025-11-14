@@ -4,7 +4,7 @@ import prisma from "../../prisma";
 export default class CreateCandidateService{
     async execute({ userId }: { userId: string}){
 
-       const exists = await prisma.candidateProfile.findUnique({
+       const exists = await prisma.candidateProfile.findFirst({
          where: { userId }
        });
 

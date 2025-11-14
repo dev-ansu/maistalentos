@@ -8,6 +8,8 @@ export async function onlyCandidates(req: Request, res: Response, next: NextFunc
   const user = await prisma.user.findUnique({
     where: { id: userId }
   });
+
+  if (!user) throw new AppError("Usuário não encontrado", 404);
   
   if (user.userType !== "candidate") {
     throw new AppError('Apenas candidatos podem acessar esta página.', 403)

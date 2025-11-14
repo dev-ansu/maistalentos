@@ -16,7 +16,8 @@ export default class AuthUserService{
                 email: email,
             },
             include:{
-                role: true
+                role: true,
+                candidate: true,
             }
         });
 
@@ -45,7 +46,8 @@ export default class AuthUserService{
             email: user.email,
             isSuperAdmin: user.isSuperAdmin,
             role: user.role?.name,
-            token: token
+            token: token,
+            candidate: user.candidate,
         };
     }
 }

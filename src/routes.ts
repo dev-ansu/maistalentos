@@ -33,7 +33,7 @@ const router = Router();
 // INÍCIO DAS ROTAS DE CANDIDATOS \\
     
     router.get("/me", isAuthenticated, new DetailUserController().handle);
-    router.post("/candidate", isAuthenticated, onlyCandidates, new CreateCandidateController().handle);
+    router.get("/candidate/:id", isAuthenticated, onlyCandidates, new CreateCandidateController().handle);
     router.put("/candidate", isAuthenticated, onlyCandidates, updateCandidateValidation, validate, new UpdateCandidateController().handle);
     router.post("/candidate/education", isAuthenticated, onlyCandidates, createCandidateEducationValidation, validate, new CreateCandidateEducationController().handle);
     router.post("/candidate/course", isAuthenticated, onlyCandidates, createCandidateCourseValidation, validate, new CreateCandidateCourseController().handle);
