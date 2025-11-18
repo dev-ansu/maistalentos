@@ -9,7 +9,12 @@ export default class DetailUserService{
                 id: userId,
             },
             include:{
-                candidate: true,
+                candidate: {
+                    include: {
+                        city: true,
+                        state: true
+                    }
+                },
                 company: true,
                 role: true,
             },

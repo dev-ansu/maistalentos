@@ -57,6 +57,7 @@ export default class UpdateCandidateService{
             city: true,
             user:{
               select:{
+                name: true,
                 email: true,
               }
             }

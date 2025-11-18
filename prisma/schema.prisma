@@ -272,6 +272,7 @@ model City{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@map("cities")
+  @@unique([name, stateId], name: "name_stateId")
   jobs Job[]
   candidateProfiles CandidateProfile[]
   companyProfiles CompanyProfile[]
