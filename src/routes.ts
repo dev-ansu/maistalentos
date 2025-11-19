@@ -44,6 +44,11 @@ const router = Router();
 
 // FIM DAS ROTAS DE CANDIDATOS \\
 
+// INÍCIO DAS ROTAS DE USUÁRIOS \\
+
+
+
+// FIM DAS ROTAS DE USUÁRIOS \\
 
 // INÍCIO DAS ROTAS DE ESTADO \\
     
