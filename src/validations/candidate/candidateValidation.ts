@@ -1,4 +1,4 @@
-import { body } from "express-validator"
+import { body, param } from "express-validator"
 import { DegreeLevel } from "../../generated/prisma";
 
 export const updateCandidateValidation = [
@@ -31,8 +31,23 @@ export const createCandidateEducationValidation = [
 
     body("endDate")
         .optional()
-        .isISO8601().withMessage("Data inválida.")
         .custom((value, { req }) => {
+
+            // Se estiver cursando, endDate deve ser ignorado
+            if (req.body.currentlyStudying == true || req.body.currentlyStudying == "true" || req.body.currentlyStudying == "on") {
+                return true;
+            }
+
+            // Se NÃO estiver cursando → endDate é obrigatório
+            if (!value) {
+                throw new Error("A data de término é obrigatória quando não estiver cursando.");
+            }
+
+            // Deve ser uma data válida
+            if (isNaN(Date.parse(value))) {
+                throw new Error("Data de término inválida.");
+            }
+
             if (req.body.startDate && new Date(value) < new Date(req.body.startDate)) {
                 throw new Error("A data final não pode ser antes da inicial.");
             }
@@ -63,3 +78,8 @@ export const createCandidateExperienceValidation = [
     .toBoolean()
     .isBoolean().withMessage("Escolha uma opção válida."),
 ];
+
+
+export const deleteCandidateEducationValidation = [
+    param('id').isUUID().withMessage('Id inválido'),
+]

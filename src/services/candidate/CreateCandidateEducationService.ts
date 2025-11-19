@@ -26,7 +26,7 @@ export default class CreateCandidateEducationService{
         const parsedStartDate =
             typeof startDate === "string" ? new Date(startDate) : startDate;
         const parsedEndDate = endDate && typeof endDate === "string" ? new Date(endDate) : endDate;
-
+        
         const education = await prisma.education.create({
             data: {
                 candidate: { connect: { id: candidate.id } },
@@ -35,7 +35,7 @@ export default class CreateCandidateEducationService{
                 institution,
                 startDate: parsedStartDate,
                 endDate: currentlyStudying ? null : parsedEndDate,
-                currentlyStudying: endDate ? false:true
+                currentlyStudying: currentlyStudying
             },
         });
 

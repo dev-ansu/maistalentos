@@ -12,7 +12,8 @@ export default class DetailUserService{
                 candidate: {
                     include: {
                         city: true,
-                        state: true
+                        state: true,
+                        education: true,
                     }
                 },
                 company: true,
