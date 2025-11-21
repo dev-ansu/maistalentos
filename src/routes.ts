@@ -4,7 +4,7 @@ import { validate } from "./middlewares/validate";
 import CreateUserController from "./controllers/user/CreateUserController";
 import AuthUserController from "./controllers/user/AuthUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { createCandidateCourseValidation, createCandidateEducationValidation, createCandidateExperienceValidation, deleteCandidateEducationValidation, updateCandidateValidation } from "./validations/candidate/candidateValidation";
+import { createCandidateCourseValidation, createCandidateEducationValidation, createCandidateExperienceValidation, deleteCandidateCourseValidation, deleteCandidateEducationValidation, updateCandidateValidation } from "./validations/candidate/candidateValidation";
 import DetailUserController from "./controllers/user/DetailUserController";
 import UpdateCandidateController from "./controllers/candidate/UpdateCandidateController";
 import CreateStateController from "./controllers/state/CreateStateController";
@@ -23,6 +23,7 @@ import { onlyCandidates } from "./middlewares/onlyCandidates";
 import CreateCandidateCourseController from "./controllers/candidate/CreateCandidateCourseController";
 import CreateCandidateExperienceController from "./controllers/candidate/CreateCandidateExperienceController";
 import DeleteCandidateEducationController from "./controllers/candidate/DeleteCandidateEducationController";
+import DeleteCandidateCourseController from "./controllers/candidate/DeleteCandidateCourseController";
 
 const router = Router();
 
@@ -39,6 +40,7 @@ const router = Router();
     router.post("/candidate/education", isAuthenticated, onlyCandidates, createCandidateEducationValidation, validate, new CreateCandidateEducationController().handle);
     router.delete("/candidate/education/:id", isAuthenticated, onlyCandidates, deleteCandidateEducationValidation, validate, new DeleteCandidateEducationController().handle);
     router.post("/candidate/course", isAuthenticated, onlyCandidates, createCandidateCourseValidation, validate, new CreateCandidateCourseController().handle);
+    router.delete("/candidate/course/:id", isAuthenticated, onlyCandidates, deleteCandidateCourseValidation, validate, new DeleteCandidateCourseController().handle);
     router.post("/candidate/experience", isAuthenticated, onlyCandidates, createCandidateExperienceValidation, validate, new CreateCandidateExperienceController().handle);
     router.post("/candidate/interest", isAuthenticated, onlyCandidates);
 

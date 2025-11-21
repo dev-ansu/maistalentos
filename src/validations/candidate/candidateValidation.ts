@@ -83,3 +83,6 @@ export const createCandidateExperienceValidation = [
 export const deleteCandidateEducationValidation = [
     param('id').isUUID().withMessage('Id inválido'),
 ]
+export const deleteCandidateCourseValidation = [
+    param('id').isUUID().withMessage('Id inválido'),
+]
