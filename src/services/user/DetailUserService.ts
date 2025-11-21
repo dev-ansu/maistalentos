@@ -14,6 +14,10 @@ export default class DetailUserService{
                         city: true,
                         state: true,
                         education: true,
+                        courses: true,
+                        experiences: true,
+                        languages: true,
+                        candidateInterests: true,
                     }
                 },
                 company: true,
