@@ -33,7 +33,7 @@ export default class CreateCandidateExperienceService{
                 position,
                 startDate: parsedStartDate,
                 endDate: currentlyWorking ? null : parsedEndDate,
-                currentlyWorking: endDate ? false:true,
+                currentlyWorking: currentlyWorking,
             }
         });
 

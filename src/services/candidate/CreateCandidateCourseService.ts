@@ -14,8 +14,8 @@ export default class CreateCandidateCourseService{
     async execute({completionDate,hours,institution,title,userId}: CourseRequest){
 
         const candidate = await prisma.candidateProfile.findUnique({
-                    where: { userId },
-                });
+            where: { userId },
+        });
         
         if (!candidate) {
             throw new AppError("Perfil de candidato não encontrado.");
