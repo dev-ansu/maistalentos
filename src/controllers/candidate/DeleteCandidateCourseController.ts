@@ -12,6 +12,6 @@ export default class DeleteCandidateCourseController{
 
         const deleted = await deleteCourseService.execute({id, userId})
 
-        return ApiResponse.success(res, 'Escolaridade apagada com sucesso.', deleted)
+        return ApiResponse.success(res, 'Curso apagado com sucesso.', deleted)
     }
 }
