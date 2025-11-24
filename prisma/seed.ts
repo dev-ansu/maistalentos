@@ -1,9 +1,12 @@
 import { PrismaClient } from "../src/generated/prisma/client";
+import { interestAreasSeed } from "./interest_areas_seed";
 
 const prisma = new PrismaClient();
 
 
 async function main(){
+    
+    await interestAreasSeed()
 
     const states = [
     { name: "Acre", acronym: "AC" },
@@ -44,12 +47,7 @@ async function main(){
     });
   }
 
-  const stateIdCeara = await prisma.state.findUnique({
-     where:{
-        acronym: "CE",
-     }
-  });
-
+  
   console.log("Estados inseridos com sucesso!");
 
     // pegar o Ceará
@@ -78,8 +76,10 @@ async function main(){
 }
 
 main()
-  .then(() => prisma.$disconnect())
   .catch((e) => {
     console.error(e);
-    prisma.$disconnect();
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
   });

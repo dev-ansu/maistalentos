@@ -27,6 +27,7 @@ import DeleteCandidateCourseController from "./controllers/candidate/DeleteCandi
 import DeleteCandidateExperienceController from "./controllers/candidate/DeleteCandidateExperienceController";
 import CreateCandidateLanguageController from "./controllers/candidate/CreateCandidateLanguageController";
 import DeleteCandidateLanguageController from "./controllers/candidate/DeleteCandidateLanguageController";
+import ListInterestAreasController from "./controllers/interest_areas/ListInterestAreasController";
 
 const router = Router();
 
@@ -48,6 +49,7 @@ const router = Router();
     router.delete("/candidate/experience/:id", isAuthenticated, onlyCandidates, deleteCandidateExperienceValidation, validate, new DeleteCandidateExperienceController().handle);
     router.post("/candidate/language", isAuthenticated, onlyCandidates, createCandidateLanguageValidation, validate, new CreateCandidateLanguageController().handle);
     router.delete("/candidate/language/:id", isAuthenticated, onlyCandidates, deleteCandidateLanguageValidation, validate, new DeleteCandidateLanguageController().handle);
+    router.get("/interestAreas", isAuthenticated, new ListInterestAreasController().handle);
     router.post("/candidate/interest", isAuthenticated, onlyCandidates);
 
 // FIM DAS ROTAS DE CANDIDATOS \\
