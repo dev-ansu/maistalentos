@@ -68,15 +68,56 @@ export const createCandidateCourseValidation = [
 ];
 
 export const createCandidateExperienceValidation = [
-    body("company").notEmpty().withMessage("O nome da empresa é obrigatório."),
-    body("position").notEmpty().withMessage("O cargo ocupado é obrigatório."),
-    body("description").trim().optional(),
-    body("startDate").notEmpty().withMessage('A data de início é obrigatória').isISO8601().withMessage("Digite uma data válida no formato YYYY-MM-DD."),
-    body("endDate").optional().isISO8601().withMessage("Digite uma data válida no formato YYYY-MM-DD."),
-    body("currentlyWorking")
+  body("company")
+    .notEmpty()
+    .withMessage("O nome da empresa é obrigatório."),
+
+  body("position")
+    .notEmpty()
+    .withMessage("O cargo ocupado é obrigatório."),
+
+  body("description")
+    .trim()
+    .optional(),
+
+  body("startDate")
+    .notEmpty()
+    .withMessage("A data de início é obrigatória.")
+    .isISO8601()
+    .withMessage("Digite uma data válida no formato YYYY-MM-DD."),
+
+  body("endDate")
+    .optional()
+    .isISO8601()
+    .withMessage("Digite uma data válida no formato YYYY-MM-DD.")
+    .custom((value, { req }) => {
+      const currentlyWorking = req.body.currentlyWorking;
+
+      // Se NÃO estiver trabalhando, endDate é obrigatória
+      if (!currentlyWorking && !value) {
+        throw new Error("A data de término é obrigatória quando não está trabalhando atualmente.");
+      }
+
+      return true;
+    })
+    .custom((value, { req }) => {
+      // Se houver endDate, precisa ser >= startDate
+      if (value) {
+        const start = new Date(req.body.startDate);
+        const end = new Date(value);
+
+        if (end < start) {
+          throw new Error("A data de término deve ser depois da data de início.");
+        }
+      }
+      return true;
+    }),
+
+  body("currentlyWorking")
     .default(false)
     .toBoolean()
-    .isBoolean().withMessage("Escolha uma opção válida."),
+    .isBoolean()
+    .withMessage("Escolha uma opção válida."),
 ];
 
 
