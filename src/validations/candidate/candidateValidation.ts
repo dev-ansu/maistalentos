@@ -3,7 +3,7 @@ import { DegreeLevel } from "../../generated/prisma";
 
 export const updateCandidateValidation = [
     body("birthdate").notEmpty().withMessage("Data de nascimento é obrigatória.").isISO8601().withMessage("Digite uma data válida no formato YYYY-MM-DD."),
-    body("summary").trim().optional(),
+    body("summary").trim().optional().isLength({ max:250}).withMessage("Limite de 250 caracteres."),
     
     body("phone").exists().withMessage("O telefone é obrigatório").notEmpty().withMessage("O telefone é obrigatório.")
     .matches(/^\d*$/).withMessage("O telefone deve conter apenas números.")
@@ -19,12 +19,12 @@ export const updateCandidateValidation = [
 
 
 export const createCandidateEducationValidation = [
-    body('institution').notEmpty().withMessage("A instituição é obrigatória."),
+    body('institution').notEmpty().withMessage("A instituição é obrigatória.").isLength({ max:50}).withMessage("Limite de 50 caracteres."),
     body("degree").notEmpty().withMessage("O grau de instrução é obrigatório.").custom(( value )=>{
         const allowed = Object.values(DegreeLevel);
         return allowed.includes(value);
     }).withMessage("Grau de instrução inválido."),
-    body("fieldOfStudy").notEmpty().withMessage("A área de estudo é obrigatória."),
+    body("fieldOfStudy").notEmpty().withMessage("A área de estudo é obrigatória.").isLength({ max:50}).withMessage("Limite de 50 caracteres."),
     body("startDate")
         .optional()
         .isISO8601().withMessage("Data inválida."),
@@ -61,8 +61,8 @@ export const createCandidateEducationValidation = [
 ];
 
 export const createCandidateCourseValidation = [
-    body('title').notEmpty().withMessage('O nome do curso é obrigatório.'),
-    body('institution').notEmpty().withMessage("A instituição é obrigatória."),
+    body('title').notEmpty().withMessage('O nome do curso é obrigatório.').isLength({ max:50}).withMessage("Limite de 50 caracteres."),
+    body('institution').notEmpty().withMessage("A instituição é obrigatória.").isLength({ max:50}).withMessage("Limite de 50 caracteres."),
     body('hours').toInt().isInt().notEmpty().withMessage("A carga horária deve ser um inteiro."),
     body("completionDate").notEmpty().withMessage("Data de conclusão é obrigatória.").isISO8601().withMessage("Digite uma data válida no formato YYYY-MM-DD.")
 ];
@@ -70,15 +70,15 @@ export const createCandidateCourseValidation = [
 export const createCandidateExperienceValidation = [
   body("company")
     .notEmpty()
-    .withMessage("O nome da empresa é obrigatório."),
+    .withMessage("O nome da empresa é obrigatório.").isLength({ max:50}).withMessage("Limite de 50 caracteres."),
 
   body("position")
     .notEmpty()
-    .withMessage("O cargo ocupado é obrigatório."),
+    .withMessage("O cargo ocupado é obrigatório.").isLength({ max:50}).withMessage("Limite de 50 caracteres."),
 
   body("description")
     .trim()
-    .optional(),
+    .optional().isLength({ max:250}).withMessage("Limite de 250 caracteres."),
 
   body("startDate")
     .notEmpty()
