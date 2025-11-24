@@ -88,8 +88,6 @@ export const createCandidateExperienceValidation = [
 
   body("endDate")
     .optional()
-    .isISO8601()
-    .withMessage("Digite uma data válida no formato YYYY-MM-DD.")
     .custom((value, { req }) => {
       const currentlyWorking = req.body.currentlyWorking;
 
