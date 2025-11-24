@@ -4,7 +4,7 @@ import { validate } from "./middlewares/validate";
 import CreateUserController from "./controllers/user/CreateUserController";
 import AuthUserController from "./controllers/user/AuthUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { createCandidateCourseValidation, createCandidateEducationValidation, createCandidateExperienceValidation, deleteCandidateCourseValidation, deleteCandidateEducationValidation, updateCandidateValidation } from "./validations/candidate/candidateValidation";
+import { createCandidateCourseValidation, createCandidateEducationValidation, createCandidateExperienceValidation, createCandidateLanguageValidation, deleteCandidateCourseValidation, deleteCandidateEducationValidation, deleteCandidateExperienceValidation, deleteCandidateLanguageValidation, updateCandidateValidation } from "./validations/candidate/candidateValidation";
 import DetailUserController from "./controllers/user/DetailUserController";
 import UpdateCandidateController from "./controllers/candidate/UpdateCandidateController";
 import CreateStateController from "./controllers/state/CreateStateController";
@@ -24,6 +24,9 @@ import CreateCandidateCourseController from "./controllers/candidate/CreateCandi
 import CreateCandidateExperienceController from "./controllers/candidate/CreateCandidateExperienceController";
 import DeleteCandidateEducationController from "./controllers/candidate/DeleteCandidateEducationController";
 import DeleteCandidateCourseController from "./controllers/candidate/DeleteCandidateCourseController";
+import DeleteCandidateExperienceController from "./controllers/candidate/DeleteCandidateExperienceController";
+import CreateCandidateLanguageController from "./controllers/candidate/CreateCandidateLanguageController";
+import DeleteCandidateLanguageController from "./controllers/candidate/DeleteCandidateLanguageController";
 
 const router = Router();
 
@@ -42,6 +45,9 @@ const router = Router();
     router.post("/candidate/course", isAuthenticated, onlyCandidates, createCandidateCourseValidation, validate, new CreateCandidateCourseController().handle);
     router.delete("/candidate/course/:id", isAuthenticated, onlyCandidates, deleteCandidateCourseValidation, validate, new DeleteCandidateCourseController().handle);
     router.post("/candidate/experience", isAuthenticated, onlyCandidates, createCandidateExperienceValidation, validate, new CreateCandidateExperienceController().handle);
+    router.delete("/candidate/experience/:id", isAuthenticated, onlyCandidates, deleteCandidateExperienceValidation, validate, new DeleteCandidateExperienceController().handle);
+    router.post("/candidate/language", isAuthenticated, onlyCandidates, createCandidateLanguageValidation, validate, new CreateCandidateLanguageController().handle);
+    router.delete("/candidate/language/:id", isAuthenticated, onlyCandidates, deleteCandidateLanguageValidation, validate, new DeleteCandidateLanguageController().handle);
     router.post("/candidate/interest", isAuthenticated, onlyCandidates);
 
 // FIM DAS ROTAS DE CANDIDATOS \\

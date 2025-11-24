@@ -118,10 +118,20 @@ export const createCandidateExperienceValidation = [
     .withMessage("Escolha uma opção válida."),
 ];
 
+export const createCandidateLanguageValidation = [
+  body("name").notEmpty().withMessage("O campo é obrigatório.").isLength({ max: 50}).withMessage("Limite de 50 caracteres."),
+  body("proficiency").notEmpty().withMessage("O campo é obrigatório.")
+]
 
 export const deleteCandidateEducationValidation = [
     param('id').isUUID().withMessage('Id inválido'),
 ]
 export const deleteCandidateCourseValidation = [
+    param('id').isUUID().withMessage('Id inválido'),
+]
+export const deleteCandidateExperienceValidation = [
+    param('id').isUUID().withMessage('Id inválido'),
+]
+export const deleteCandidateLanguageValidation = [
     param('id').isUUID().withMessage('Id inválido'),
 ]
