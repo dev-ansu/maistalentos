@@ -11,13 +11,16 @@ export default class DetailUserService{
             include:{
                 candidate: {
                     include: {
+                        user: true,
                         city: true,
                         state: true,
                         education: true,
                         courses: true,
                         experiences: true,
                         languages: true,
-                        candidateInterests: true,
+                        candidateInterests:{
+                            select:{id: true, interest: true }
+                        }
                     }
                 },
                 company: true,

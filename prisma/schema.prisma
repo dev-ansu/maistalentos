@@ -11,6 +11,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL")
 }
 
 enum JobType{
@@ -293,4 +294,6 @@ model CandidateInterest {
   interest     InterestArea     @relation(fields: [interestId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  @@unique([candidateId, interestId])
 }

@@ -1,18 +1,18 @@
 import { AppError } from "../../errors/AppError";
 import prisma from "../../prisma";
 
-interface DeleteExperienceRequest{
+interface DeleteCandidateInterestRequest{
     id: string;
     userId: string;
 }
 
-export default class DeleteCandidateExperienceService{
-    async execute({id, userId}: DeleteExperienceRequest){
+export default class DeleteCandidateInterestService{
+    async execute({id, userId}: DeleteCandidateInterestRequest){
 
         // Deleta somente se pertencer ao usuário
-        const deleted = await prisma.experience.deleteMany({
+        const deleted = await prisma.candidateInterest.deleteMany({
             where: {
-                id,
+                id: id,
                 candidate: {
                     userId
                 }

@@ -123,6 +123,10 @@ export const createCandidateLanguageValidation = [
   body("proficiency").notEmpty().withMessage("O campo é obrigatório.")
 ]
 
+export const createCandidateInterestValidation = [
+  body("interest").isUUID().withMessage('Id inválido.').notEmpty().withMessage("O campo é obrigatório")
+]
+
 export const deleteCandidateEducationValidation = [
     param('id').isUUID().withMessage('Id inválido'),
 ]
@@ -134,4 +138,8 @@ export const deleteCandidateExperienceValidation = [
 ]
 export const deleteCandidateLanguageValidation = [
     param('id').isUUID().withMessage('Id inválido'),
+]
+
+export const deleteCandidateInterestValidation = [
+  param("id").isUUID().withMessage('Id inválido.').notEmpty().withMessage("O campo é obrigatório")
 ]
