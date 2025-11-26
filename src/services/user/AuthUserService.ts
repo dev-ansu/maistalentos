@@ -18,6 +18,14 @@ export default class AuthUserService{
             include:{
                 role: true,
                 candidate: true,
+                company: {
+                    include:{
+                        state:true,
+                        city: true,
+                        companyInterest: true,
+                        jobs: true,
+                    }
+                }
             }
         });
 
@@ -49,6 +57,7 @@ export default class AuthUserService{
             token: token,
             userType: user.userType,
             candidate: user.candidate,
+            company: user.
         };
     }
 }

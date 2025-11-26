@@ -23,7 +23,18 @@ export default class DetailUserService{
                         }
                     }
                 },
-                company: true,
+                company: {
+                    include:{
+                        companyInterest: {
+                            select:{
+                                interest: true
+                            }
+                        },
+                        state: true,
+                        city: true,
+                        jobs: true,
+                    }
+                },
                 role: true,
             },
             omit:{
