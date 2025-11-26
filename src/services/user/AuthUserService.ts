@@ -47,6 +47,7 @@ export default class AuthUserService{
             isSuperAdmin: user.isSuperAdmin,
             role: user.role?.name,
             token: token,
+            userType: user.userType,
             candidate: user.candidate,
         };
     }

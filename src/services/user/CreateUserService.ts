@@ -1,4 +1,5 @@
 import { AppError } from "../../errors/AppError";
+import { UserType } from "../../generated/prisma";
 import prismaClient from "../../prisma";
 import { hash } from "bcryptjs";
 
@@ -6,10 +7,11 @@ interface UserRequest{
     name: string;
     email: string;
     password: string;
+    userType: UserType;
 }
 
 export default class CreateUserService{
-    async execute({name,email,password}: UserRequest){
+    async execute({name,email,password, userType}: UserRequest){
         
         const userAlreadyExists = await prismaClient.user.findFirst({
             where:{
@@ -28,6 +30,7 @@ export default class CreateUserService{
                 name,
                 email,
                 password: passwordHash,
+                userType
             },
             omit: { password: true }
         })

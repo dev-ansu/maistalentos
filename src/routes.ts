@@ -57,6 +57,7 @@ const router = Router();
 
 // FIM DAS ROTAS DE CANDIDATOS \\
 
+
 // INÍCIO DAS ROTAS DE USUÁRIOS \\
 
 
@@ -80,6 +81,10 @@ const router = Router();
     router.put("/city/:id", isAuthenticated, isSuperAdmin, updateCityValidation, validate, new UpdateCityController().handle);
 
 // FIM DAS ROTAS DE CIDADES \\
+
+// INÍCIO DAS ROTAS DE EMPRESAS
+
+// FIM DAS ROTAS DE EMPRESAS \\
 
 router.get("/teste", async (req: Request, res: Response)=>{
     return res.json( { ok: true });

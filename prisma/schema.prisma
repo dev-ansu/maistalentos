@@ -137,12 +137,19 @@ model CompanyProfile{
   name String
   cnpj String @unique
   description String?
+  phone       String?
+  contactEmail String?
+  instagram   String?
+  linkedin    String?
+  facebook    String?
   website String?
+  isActive    Boolean   @default(true)
   jobs Job[]
   stateId String
   state State @relation(fields: [stateId], references: [id])
   cityId String
   city City @relation(fields: [cityId], references: [id])
+  companyInterest CompanyInterest[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -282,8 +289,21 @@ model InterestArea {
   id        String   @id @default(uuid())
   name      String   @unique
   candidates CandidateInterest[]
+  companies CompanyInterest[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model CompanyInterest{
+  id           String          @id @default(uuid())
+  companyId  String
+  company    CompanyProfile @relation(fields: [companyId], references: [id])
+  interestId   String
+  interest     InterestArea     @relation(fields: [interestId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([companyId, interestId])
 }
 
 model CandidateInterest {
