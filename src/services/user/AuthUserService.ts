@@ -57,7 +57,7 @@ export default class AuthUserService{
             token: token,
             userType: user.userType,
             candidate: user.candidate,
-            company: user.
+            company: user.company
         };
     }
 }
