@@ -21,12 +21,12 @@ export default class CheckUserTypeController{
             throw new AppError('Usuário não encontrado.', 404);
         }
 
-        const { path } = req.params;
+        const { path } = req.query;
 
         console.log(path)
 
         const canAccess = allowedRoutes[user.userType]?.includes(path as string);
-   
+        console.log(canAccess)
         return ApiResponse.success(res, 'Sucesso', {
             userType: user.userType,
             allowed: !!canAccess
