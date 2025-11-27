@@ -30,12 +30,14 @@ import DeleteCandidateLanguageController from "./controllers/candidate/DeleteCan
 import ListInterestAreasController from "./controllers/interest_areas/ListInterestAreasController";
 import CreateCandidateInterestController from "./controllers/candidate/CreateCandidateInterestController";
 import DeleteCandidateInterestController from "./controllers/candidate/DeleteCandidateInterestController";
+import CheckUserTypeController from "./controllers/CheckUserTypeController";
 
 const router = Router();
 
 // INÍCIO DAS ROTAS PÚBLICAS \\
     router.post("/users", createUserValidation, validate, new CreateUserController().handle);
     router.post("/session", authUserValidation, validate, new AuthUserController().handle)
+    router.get("/check-user-type", isAuthenticated, new CheckUserTypeController().handle)
 // FIM DAS ROTAS PÚBLICAS \\
 
 // INÍCIO DAS ROTAS DE CANDIDATOS \\
