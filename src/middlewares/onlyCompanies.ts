@@ -10,7 +10,7 @@ export async function onlyCompanies(req: Request, res: Response, next: NextFunct
   });
   
   if (user.userType !== "company") {
-    throw new AppError('Apenas candidatos podem acessar esta página.', 403)
+    throw new AppError('Apenas empresas podem acessar esta página.', 403)
   }
 
   next();

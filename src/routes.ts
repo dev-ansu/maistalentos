@@ -31,6 +31,9 @@ import ListInterestAreasController from "./controllers/interest_areas/ListIntere
 import CreateCandidateInterestController from "./controllers/candidate/CreateCandidateInterestController";
 import DeleteCandidateInterestController from "./controllers/candidate/DeleteCandidateInterestController";
 import CheckUserTypeController from "./controllers/CheckUserTypeController";
+import { onlyCompanies } from "./middlewares/onlyCompanies";
+import { companyProfileValidation } from "./validations/company/company_profile";
+import CreateCompanyProfileController from "./controllers/company/CreateCompanyProfileController";
 
 const router = Router();
 
@@ -85,6 +88,8 @@ const router = Router();
 // FIM DAS ROTAS DE CIDADES \\
 
 // INÍCIO DAS ROTAS DE EMPRESAS
+
+    router.post("/company", isAuthenticated, onlyCompanies, companyProfileValidation, validate, new CreateCompanyProfileController().handle)
 
 // FIM DAS ROTAS DE EMPRESAS \\
 

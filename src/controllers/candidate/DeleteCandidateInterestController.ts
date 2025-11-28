@@ -12,6 +12,6 @@ export default class DeleteCandidateInterestController{
 
         const deleted = await deleteInterestService.execute({id, userId})
 
-        return ApiResponse.success(res, 'Experiência apagada com sucesso.', deleted)
+        return ApiResponse.success(res, 'Área de interesse apagada com sucesso.', deleted)
     }
 }

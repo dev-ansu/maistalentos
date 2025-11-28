@@ -34,6 +34,7 @@ export default class CreateCandidateInterestService{
                 interest: { connect: { id: interest }}
             },
             select:{
+                id: true,
                 interest: true,
             }
         });
