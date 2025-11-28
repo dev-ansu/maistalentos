@@ -34,6 +34,7 @@ import CheckUserTypeController from "./controllers/CheckUserTypeController";
 import { onlyCompanies } from "./middlewares/onlyCompanies";
 import { companyProfileValidation } from "./validations/company/company_profile";
 import CreateCompanyProfileController from "./controllers/company/CreateCompanyProfileController";
+import ListEnumsController from "./controllers/ListEnumsController";
 
 const router = Router();
 
@@ -92,6 +93,8 @@ const router = Router();
     router.post("/company", isAuthenticated, onlyCompanies, companyProfileValidation, validate, new CreateCompanyProfileController().handle)
 
 // FIM DAS ROTAS DE EMPRESAS \\
+
+router.get("/enums", new ListEnumsController().handle);
 
 router.get("/teste", async (req: Request, res: Response)=>{
     return res.json( { ok: true });

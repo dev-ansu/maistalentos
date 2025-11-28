@@ -14,7 +14,40 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
-enum JobType{
+enum Gender {
+  male
+  female
+  non_binary
+  other
+  prefer_not_to_say
+}
+
+enum CompanySize {
+  micro
+  small  
+  medium
+  large
+  enterprise
+}
+
+enum VerificationStatus {
+  pending
+  approved
+  rejected
+  under_review
+}
+
+enum Ethnicity {
+  white
+  black
+  brown
+  indigenous
+  asian
+  other
+  prefer_not_to_say
+}
+
+enum WorkModel {
   presencial
   hibrido
   remoto
@@ -115,6 +148,19 @@ model CandidateProfile{
   phone String?
   whatsapp String?  
   stateId String?
+  gender Gender? // diversidade
+  ethnicity Ethnicity? // diversidade
+  isAvailable Boolean @default(true) // disponível para oportunidades
+  salaryExpectation Float? // pretensão salarial
+  workModel WorkModel[] // presencial, híbrido, remoto
+   // 📍 MELHORIAS DE CONTATO:
+  email String? // email alternativo
+  portfolioUrl String? // portfolio/linkedin
+  
+  // 🎯 PREFERENCES:
+  willingnessToTravel Boolean @default(false)
+  willingnessToRelocate Boolean @default(false)
+  
   state State? @relation(fields: [stateId], references: [id])
   cityId String?
   city City? @relation(fields: [cityId], references: [id])
@@ -128,6 +174,8 @@ model CandidateProfile{
 
   @@map("candidate_profile")
   candidateInterests CandidateInterest[]
+  @@index([isAvailable, stateId, cityId]) // para busca
+
 }
 
 model CompanyProfile{
@@ -144,6 +192,21 @@ model CompanyProfile{
   facebook    String?
   website String?
   isActive    Boolean   @default(true)
+   // 🆕 CAMPOS SUGERIDOS:
+  companySize CompanySize? // micro, pequena, media, grande
+  industry String? // ramo de atividade
+  foundedYear Int? // ano de fundação
+  logoUrl String? // logo da empresa
+  
+  // 🛡️ CAMPOS ANTI-FRAUDE:
+  isVerified Boolean @default(false)
+  verificationStatus VerificationStatus @default(pending)
+  verificationNotes String?
+  
+  // 📍 MELHORIAS DE LOCALIZAÇÃO:
+  address String? // endereço completo
+  zipCode String? // CEP
+  
   jobs Job[]
   stateId String
   state State @relation(fields: [stateId], references: [id])
@@ -154,6 +217,8 @@ model CompanyProfile{
   updatedAt DateTime @updatedAt
 
   @@map("company_profile")
+  @@index([isVerified, isActive]) // para queries de moderação
+
 }
 
 
@@ -167,7 +232,7 @@ model Job{
   salary Float?
   
   location String?
-  type JobType
+  type WorkModel
   status JobStatus @default(open)
   applications Application[]
 
