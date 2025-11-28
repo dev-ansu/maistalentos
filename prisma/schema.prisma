@@ -126,7 +126,7 @@ model CandidateProfile{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("candiddate_profile")
+  @@map("candidate_profile")
   candidateInterests CandidateInterest[]
 }
 
